@@ -1,0 +1,1 @@
+﻿Názov projektu: Blokové schéma pre základné aritmetické operácie

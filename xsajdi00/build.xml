@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="xsajdi00" default="compile" basedir=".">
+
+    <target name="clean" description="Clean structure.">
+        <delete dir="build"/>
+        <delete dir="dest-client"/>
+        <delete dir="doc"/>
+    </target>
+
+
+    <target name="compile" depends="createdoc" description="Compile application"> 
+        <mkdir dir="build"/>
+        <javac includeantruntime="false" srcdir="src" destdir="build" encoding="utf-8"
+               classpath="src:lib/hamcrest-core-1.3.jar:lib/junit-4.12.jar"/>  
+
+        <mkdir dir="dest-client"/>
+        <jar destfile="dest-client/ija-client.jar"
+             basedir="build">
+            <manifest>
+                <attribute name="Main-Class" value="ija.MainWindow"/>
+                <attribute name="Class-Path" value="lib/hamcrest-core-1.3.jar lib/junit-4.12.jar"/> 
+            </manifest>
+        </jar>
+
+        <mkdir dir="dest-client/lib"/>
+        <copy file="lib/hamcrest-core-1.3.jar" todir="dest-client/lib"/>
+        <copy file="lib/junit-4.12.jar" todir="dest-client/lib"/>
+    </target>
+
+    <target name="createdoc" depends="clean" description="Generate program documentation">
+        <mkdir dir="doc"/>
+        <javadoc sourcepath="src" destdir="doc"/>
+    </target>
+
+
+    <target name="run">
+    	<java jar="dest-client/ija-client.jar" dir="dest-client" fork="true"/>
+    </target>
+
+</project>
